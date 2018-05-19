@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Getter
 public class BitmojigramBot {
@@ -105,18 +106,20 @@ public class BitmojigramBot {
                         int index = 0;
                         String queryString = query.getQuery();
 
-                        // sort terms by their distance to the search query
-                        terms.sort(Comparator.comparingInt((s) -> stringDistance(queryString, s)));
+                        if (!queryString.isEmpty()) {
+                            terms.removeIf((s) -> !s.contains(queryString));
+                            terms.sort(Comparator.comparingInt((s) -> stringDistance(queryString, s)));
+                        }
 
-                        // add the comics up until you have 16 comics
-                        while (comics.size() < 16 && index + 1 < terms.size()) {
+                        // add the comics up until you have 50 comics
+                        while (comics.size() < 49 && index + 1 < terms.size()) {
                             comics.addAll(searchResults.get(terms.get(index)));
                             index++;
                         }
 
-                        // TODO sort comics by how high the term used is in their list
-                        // for example, a comic with "hi" as its third term should be
-                        // lower on the search results than one with "hi" as its first
+                        if (comics.size() > 50) {
+                            comics = comics.stream().limit(50).collect(Collectors.toSet());
+                        }
 
                         // add each result as a photo
                         comics.forEach((comic) -> {
@@ -126,9 +129,6 @@ public class BitmojigramBot {
                                     .id(String.valueOf(comic.getComicId()))
                                     .url(url)
                                     .thumbUrl(url)
-                                    // resize to an appropriate size for telegram chats
-                                    .height(512)
-                                    .width(512)
                                     .build());
                         });
 

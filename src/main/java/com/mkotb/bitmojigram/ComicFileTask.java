@@ -48,9 +48,15 @@ public class ComicFileTask extends TimerTask {
                 });
             });
 
-            System.out.println("There are " + searchResults.keySet().size() + " search terms");
+            BitmojigramBot.getInstance().searchResults.clear();
 
-            BitmojigramBot.getInstance().searchResults = searchResults;
+            searchResults.keySet().forEach((key) -> {
+                List<BitmojiComic> comics = searchResults.get(key);
+                comics.sort(Comparator.comparingInt((e) -> e.getTags().indexOf(key)));
+                BitmojigramBot.getInstance().searchResults.put(key, comics);
+            });
+
+            System.out.println("There are " + searchResults.keySet().size() + " search terms");
         } catch (IOException ex) {
             System.out.println("Could not fetch comic file!");
             ex.printStackTrace();
