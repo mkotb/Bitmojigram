@@ -129,6 +129,9 @@ public class BitmojigramBot {
                                     .id(String.valueOf(comic.getComicId()))
                                     .url(url)
                                     .thumbUrl(url)
+                                    // resize to an appropriate size for telegram chats
+                                    .height(256)
+                                    .width(256)
                                     .build());
                         });
 
