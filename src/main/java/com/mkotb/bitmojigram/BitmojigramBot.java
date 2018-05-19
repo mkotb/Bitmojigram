@@ -7,11 +7,6 @@ import com.jtelegram.api.commands.Command;
 import com.jtelegram.api.events.inline.InlineQueryEvent;
 import com.jtelegram.api.ex.TelegramException;
 import com.jtelegram.api.inline.InlineQuery;
-import com.jtelegram.api.inline.input.InputTextMessageContent;
-import com.jtelegram.api.inline.keyboard.InlineKeyboardButton;
-import com.jtelegram.api.inline.keyboard.InlineKeyboardMarkup;
-import com.jtelegram.api.inline.keyboard.InlineKeyboardRow;
-import com.jtelegram.api.inline.result.InlineResultArticle;
 import com.jtelegram.api.inline.result.InlineResultPhoto;
 import com.jtelegram.api.requests.inline.AnswerInlineQuery;
 import com.jtelegram.api.requests.message.send.SendText;
@@ -34,6 +29,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static spark.Spark.*;
 
 @Getter
 public class BitmojigramBot {
@@ -124,6 +121,7 @@ public class BitmojigramBot {
                         // add each result as a photo
                         comics.forEach((comic) -> {
                             String url = String.format(comic.getUrl(), id.toString());
+                            System.out.println("photo url: " + url);
 
                             builder.addResult(InlineResultPhoto.builder()
                                     .id(String.valueOf(comic.getComicId()))
