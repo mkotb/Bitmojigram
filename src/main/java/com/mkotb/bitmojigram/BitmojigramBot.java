@@ -30,8 +30,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static spark.Spark.*;
-
 @Getter
 public class BitmojigramBot {
     private static final String FORM_DATA_TEMPLATE = "client_id=imoji&grant_type=password&client_secret=secret&username=%s&password=%s";
@@ -121,7 +119,6 @@ public class BitmojigramBot {
                         // add each result as a photo
                         comics.forEach((comic) -> {
                             String url = String.format(comic.getUrl(), id.toString());
-                            System.out.println("photo url: " + url);
 
                             builder.addResult(InlineResultPhoto.builder()
                                     .id(String.valueOf(comic.getComicId()))
