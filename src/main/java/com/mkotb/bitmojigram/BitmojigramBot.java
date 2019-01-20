@@ -50,7 +50,7 @@ public class BitmojigramBot {
         TelegramBotRegistry.builder()
                 .updateProvider(new PollingUpdateProvider())
                 .build()
-                .registerBot(args[0], (bot, error) -> {
+                .registerBot(System.getenv("TELEGRAM_KEY"), (bot, error) -> {
                     if (error != null) {
                         System.out.println("Unable to start bot! Shutting down..");
                         error.printStackTrace();
