@@ -5,4 +5,4 @@ COPY . /usr/src/bot
 VOLUME /usr/src/bot
 
 RUN mvn clean package
-CMD ["java", "-jar", "/usr/src/bot/jar/aesthethicc-bot-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/usr/src/bot/jar/bitmojigram-1.0-SNAPSHOT.jar"]
